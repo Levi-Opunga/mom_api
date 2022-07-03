@@ -1,27 +1,27 @@
 import com.google.gson.Gson;
 import daos.ArticlesSql2oDao;
-import daos.UserSql20Dao;
+import daos.ChatSql2oDao;
 import models.Article;
-import models.User;
+import models.Chat;
 
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static spark.Spark.*;
 import static spark.Spark.delete;
 import static spark.Spark.get;
+import static spark.route.HttpMethod.get;
+import static spark.route.HttpMethod.post;
 
 public class App {
     public static void main(String[] args) {
-
-
-
         Gson gson = new Gson();
+///////////////////////////////////////////////ARTICLE//////////////////////////////////////////////////////////////
         ArticlesSql2oDao ArticlesSql2oDao = new ArticlesSql2oDao();
-        UserSql20Dao userSql20Dao = new UserSql20Dao();
-
+        get("/get-allArticles",(req, res) ->{
+            List<Article> list = ArticlesSql2oDao.getAllArticles();
+            return gson.toJson(list);
+        });
         post("/post-article", (request, response) -> {
             Article article = gson.fromJson(request.body(), Article.class);
             ArticlesSql2oDao.addArticle(article);
@@ -56,42 +56,58 @@ public class App {
 
             return gson.toJson(article);
         });
-
-        post("/post-user", "application/json", (request, response) -> {
-            User user = gson.fromJson(request.body(), User.class);
-            userSql20Dao.addUser(user);
-            return gson.toJson(user);
+/////////////////////////////////////////CHATS/////////////////////////////////////////////////
+        ChatSql2oDao chatDao = new ChatSql2oDao();
+        get("/get-allChats",(req, res) ->{
+            List<Chat> list = chatDao.getAllChats();
+           return gson.toJson(list);
         });
-        delete("/delete-user", (request, response) -> {
-            userSql20Dao.removeUser(2);
-            responseObject OBJ = new responseObject("Success deleted", "Deleted Succesfully", 200);
+        post("/chat",(req, res) ->{
+            Chat chat = new Chat(15,14,"wertyrtyui");
+            chatDao.addArticle(chat);
+            return gson.toJson(chat);
+        });
+
+        patch("/edit-chat",(req, res) ->{
+            Chat chat = new Chat(1,3,"any message");
+            chat.setID(1);
+            chatDao.editArticle(chat);
+            return gson.toJson(chat);
+        });
+
+
+        delete("/delete-chat", (req, res) -> {
+            chatDao.removeArticle(9);
+            responseObject OBJ = new responseObject("Success deleted", "Ok", 200);
             return gson.toJson(OBJ);
         });
-        get("/search-user", "application/json", (request, response) -> {
-            String query = request.queryParams("search");
-            List<User> list = userSql20Dao.searchUser(query);
-            if(list.size() > 0){
-                return gson.toJson(list);
-            }else{
-                Map<String, String > model = new HashMap<>();
-                model.put("message", "No user found");
-                return gson.toJson(model);
-            }
-
+        get("/search-chat/:search", (req, res) -> {
+            String query = req.params("search");
+            List<Chat> list = chatDao.searchChats(query);
+            System.out.println(list.size());
+            return gson.toJson(list);
+        });
+        get("/chat-thread",(req,res)->{
+            List<Chat> list = chatDao.getSpecificChatThread(1,3);
+            return gson.toJson(list);
         });
 
-        patch("/update-user",(req, res) ->{
-            User user = new User("john","hello","yes","0987654","kenya",3);
-            user.setId(4);
-            userSql20Dao.editUser(user);
 
-            return gson.toJson(user);
-        });
+
+
+
 
     }
 
     private static class responseObject {
-        public responseObject(String success, String ok, int i) {
+        String message ;
+        String status;
+        int statuscode;
+
+        public responseObject(String message, String status, int statuscode) {
+            this.message = message;
+            this.status = status;
+            this.statuscode = statuscode;
         }
     }
 }

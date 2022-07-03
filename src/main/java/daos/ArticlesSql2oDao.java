@@ -40,6 +40,7 @@ public class ArticlesSql2oDao implements ArticleDao {
         }
         catch (Exception e)
         {
+            e.printStackTrace();
         }
 
     }
@@ -57,6 +58,7 @@ public class ArticlesSql2oDao implements ArticleDao {
         }
         catch (Exception e)
         {
+            e.printStackTrace();
         }
         return null;
     }
@@ -76,6 +78,22 @@ public class ArticlesSql2oDao implements ArticleDao {
         }
         catch (Exception e)
         {
+e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Article> getAllArticles() {
+        String sqlStatement = "Select * from articles";
+        try(Connection con = DatabaseConnection.sql2o.open())
+        {
+            return  con.createQuery(sqlStatement)
+                    .executeAndFetch(Article.class);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
         return null;
     }
