@@ -3,8 +3,9 @@ package daos;
 import models.User;
 
 import org.sql2o.Connection;
+
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 public class UserSql20Dao implements UsersDao {
@@ -18,7 +19,7 @@ public class UserSql20Dao implements UsersDao {
                     .addParameter("lastmsgtime", user.getLastMsgTime())
                     .addParameter("phoneno", user.getPhoneNo())
                     .addParameter("conutry", user.getCountry())
-                    .addParameter("imagid", user.getImageId())
+                    .addParameter("imagid", user.getImagid())
                     .executeUpdate()
                     .getKey();
             user.setId(id);
@@ -63,20 +64,23 @@ public class UserSql20Dao implements UsersDao {
 
     @Override
     public List<User> searchUser(String search) {
-        String sqlStatement = "SELECT * from users";
+        String sqlStatement = "SELECT * FROM users WHERE name LIKE CONCAT('%',:search,'%')";
         try(Connection conn = DatabaseConnection.sql2o.open()){
             return conn.createQuery(sqlStatement)
-                    .executeAndFetch(User.class)
-                    .stream()
-                    .filter(user -> user.getName().toUpperCase()
-                            .contains(search.toLowerCase()) || user.getPhoneNo().toUpperCase().contains(search.toLowerCase()))
-                    .collect(Collectors.toList());
+                    .addParameter("search", search)
+                    .executeAndFetch(User.class);
+//                    .stream()
+//                    .filter(user -> user.getName().toUpperCase()
+//                            .contains(search.toLowerCase()) || user.getPhoneNo().toUpperCase().contains(search.toLowerCase()))
+//                    .collect(Collectors.toList());
+
 
         }
         catch (Exception e){
             System.out.println(e);
+            return new ArrayList<>();
         }
-        return null;
+
     }
 
     @Override
@@ -89,7 +93,7 @@ public class UserSql20Dao implements UsersDao {
                     .addParameter("lastmsgtime", user.getLastMsgTime())
                     .addParameter("phoneno", user.getPhoneNo())
                     .addParameter("conutry", user.getCountry())
-                    .addParameter("imagid", user.getImageId())
+                    .addParameter("imagid", user.getImagid())
                     .executeUpdate()
                     .getKey();
             user.setId(id);

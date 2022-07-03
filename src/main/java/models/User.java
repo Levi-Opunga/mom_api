@@ -8,16 +8,16 @@ public class User {
     private String lastMessage;
     private String lastMsgTime;
     private String phoneNo;
-    private String country;
-    private int imageId;
+    private String conutry;
+    private int imagid;
 
-    public User(String name, String lastMessage, String lastMsgTime, String phoneNo, String country, int imageId) {
+    public User(String name, String lastMessage, String lastMsgTime, String phoneNo, String conutry, int imagid) {
         this.name = name;
         this.lastMessage = lastMessage;
         this.lastMsgTime = lastMsgTime;
         this.phoneNo = phoneNo;
-        this.country = country;
-        this.imageId = imageId;
+        this.conutry = conutry;
+        this.imagid = imagid;
     }
 
     public User() {
@@ -64,19 +64,19 @@ public class User {
     }
 
     public String getCountry() {
-        return country;
+        return conutry;
     }
 
     public void setCountry(String country) {
-        this.country = country;
+        this.conutry = country;
     }
 
-    public int getImageId() {
-        return imageId;
+    public int getImagid() {
+        return imagid;
     }
 
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
+    public void setImagid(int imagid) {
+        this.imagid = imagid;
     }
 
     @Override
@@ -85,16 +85,16 @@ public class User {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return id == user.id &&
-                imageId == user.imageId &&
+                imagid == user.imagid &&
                 Objects.equals(name, user.name) &&
                 Objects.equals(lastMessage, user.lastMessage) &&
                 Objects.equals(lastMsgTime, user.lastMsgTime) &&
                 Objects.equals(phoneNo, user.phoneNo) &&
-                Objects.equals(country, user.country);
+                Objects.equals(conutry, user.conutry);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, lastMessage, lastMsgTime, phoneNo, country, imageId);
+        return Objects.hash(id, name, lastMessage, lastMsgTime, phoneNo, conutry, imagid);
     }
 }

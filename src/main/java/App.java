@@ -5,7 +5,9 @@ import models.Article;
 import models.User;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static spark.Spark.*;
 import static spark.Spark.delete;
@@ -66,11 +68,19 @@ public class App {
             responseObject OBJ = new responseObject("Success deleted", "Deleted Succesfully", 200);
             return gson.toJson(OBJ);
         });
-        get("/search-user/:search", (request, response) -> {
-            String query = request.params("search");
+        get("/search-user", "application/json", (request, response) -> {
+            String query = request.queryParams("search");
             List<User> list = userSql20Dao.searchUser(query);
-            System.out.println(list.size());
-            return gson.toJson(list);
+//            System.out.println(list.size());
+            if(list.size() > 0){
+                return gson.toJson(list);
+            }else{
+                Map<String, String > model = new HashMap<>();
+                model.put("message", "No user found");
+                return gson.toJson(model);
+            }
+
+
         });
 
         patch("/update-user",(req, res) ->{
