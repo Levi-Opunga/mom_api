@@ -33,7 +33,7 @@ public class UserSql20Dao implements UsersDao {
 
     @Override
     public void removeUser(int id) {
-        String sqlStatement = "DeELETE from users where id = :id";
+        String sqlStatement = "DELETE from users where id = :id";
         try(Connection conn = DatabaseConnection.sql2o.open())
         {
             conn.createQuery(sqlStatement)
@@ -49,7 +49,7 @@ public class UserSql20Dao implements UsersDao {
 
     @Override
     public User getSpecificUser(int id) {
-        String sqlStatement = "SELECT from users where id = :id";
+        String sqlStatement = "SELECT * from users where id = :id";
         try(Connection conn = DatabaseConnection.sql2o.open()){
             return conn.createQuery(sqlStatement)
                     .addParameter("id", id)
@@ -81,15 +81,15 @@ public class UserSql20Dao implements UsersDao {
 
     @Override
     public void editUser(User user) {
-        String sqlStatement = "UPDATE users set (name, lastMessage, lastMsgTime, phoneNo,country, imageId) values(:name, :lastMessage, :lastMsgTime, :phoneNo,country, :imageId)";
+        String sqlStatement = "UPDATE users set (name, lastmessage, lastmsgtime, phoneno,conutry, imagid) values(:name, :lastmessage, :lastmsgtime, :phoneno, :conutry, :imagid)";
         try (Connection conn = DatabaseConnection.sql2o.open()){
             int id = (int) conn.createQuery(sqlStatement, true)
                     .addParameter("name", user.getName())
-                    .addParameter("lastMassage", user.getLastMessage())
-                    .addParameter("lastMsgTime", user.getLastMsgTime())
-                    .addParameter("phoneNo", user.getPhoneNo())
-                    .addParameter("country", user.getCountry())
-                    .addParameter("imageId", user.getImageId())
+                    .addParameter("lastmassage", user.getLastMessage())
+                    .addParameter("lastmsgtime", user.getLastMsgTime())
+                    .addParameter("phoneno", user.getPhoneNo())
+                    .addParameter("conutry", user.getCountry())
+                    .addParameter("imagid", user.getImageId())
                     .executeUpdate()
                     .getKey();
             user.setId(id);
