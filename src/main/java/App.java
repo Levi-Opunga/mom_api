@@ -57,14 +57,13 @@ public class App {
             return gson.toJson(article);
         });
 
-
         post("/post-user", "application/json", (request, response) -> {
             User user = gson.fromJson(request.body(), User.class);
             userSql20Dao.addUser(user);
             return gson.toJson(user);
         });
         delete("/delete-user", (request, response) -> {
-            userSql20Dao.removeUser(6);
+            userSql20Dao.removeUser(2);
             responseObject OBJ = new responseObject("Success deleted", "Deleted Succesfully", 200);
             return gson.toJson(OBJ);
         });
@@ -79,7 +78,6 @@ public class App {
                 return gson.toJson(model);
             }
 
-
         });
 
         patch("/update-user",(req, res) ->{
@@ -89,8 +87,6 @@ public class App {
 
             return gson.toJson(user);
         });
-
-
 
     }
 
