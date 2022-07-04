@@ -71,7 +71,6 @@ public class App {
         get("/search-user", "application/json", (request, response) -> {
             String query = request.queryParams("search");
             List<User> list = userSql20Dao.searchUser(query);
-//            System.out.println(list.size());
             if(list.size() > 0){
                 return gson.toJson(list);
             }else{
