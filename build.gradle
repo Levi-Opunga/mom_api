@@ -2,14 +2,17 @@ plugins {
     id 'java'
 }
 
-group 'org.example'
+group 'mom_api'
 version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     implementation group: 'junit', name: 'junit', version: '4.12'
@@ -20,8 +23,4 @@ dependencies {
     implementation group: 'org.sql2o', name: 'sql2o', version: '1.5.4'
     implementation group: 'com.h2database', name: 'h2', version: '1.4.191'
     implementation 'com.google.code.gson:gson:2.5'
-}
-
-test {
-    useJUnitPlatform()
 }
