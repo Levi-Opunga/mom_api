@@ -15,5 +15,5 @@ public interface ChatDao
 
     List<Chat> searchChats(String search);
     List<Chat> getAllChats();
-    void editArticle(Chat chat);
+    void editChat(Chat chat);
 }

@@ -13,3 +13,12 @@ message VARCHAR,
 ReceiverID int,
 senderID int
 );
+Create table users(
+ID  SERIAL PRIMARY KEY,
+name VARCHAR,
+lastmessage VARCHAR,
+lastmsgTime VARCHAR,
+phoneno VARCHAR,
+country VARCHAR,
+imagid int
+);

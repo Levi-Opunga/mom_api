@@ -44,7 +44,7 @@ e.printStackTrace();
 
     @Override
     public List<Chat> getSpecificChatThread(int senderID,int receiverID) {
-        String sqlStatement = "Select * from chats where receiverid=:receiverid AND senderid=:senderid";
+        String sqlStatement = "Select * from chats where receiverid=:receiverid AND senderid=:senderid OR senderid=:receiverid AND receiverid=:senderid;";
         try(Connection con = DatabaseConnection.sql2o.open())
         {
             return  con.createQuery(sqlStatement)
@@ -93,7 +93,7 @@ e.printStackTrace();
     }
 
     @Override
-    public void editArticle(Chat chat) {
+    public void editChat(Chat chat) {
 
         String sqlStatement = "Update chats set (message,senderid, receiverid) = ( :message, :senderid, :receiverid) where id=:id;";
         try (Connection conn = DatabaseConnection.sql2o.open()) {
