@@ -1,0 +1,59 @@
+<changelist name="Uncommitted_changes_before_Checkout_at_04_07_2022,_22_51_[Changes]" date="1656964290833" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_04_07_2022,_22_51_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 04/07/2022, 22:51 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/5.2.1/javaCompile/javaCompile.lock" />
+    <option name="AFTER_PATH" value=".gradle/5.2.1/javaCompile/javaCompile.lock" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_04_07_2022,_22_51_[Changes]/javaCompile.lock" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/5.2.1/executionHistory/executionHistory.lock" />
+    <option name="AFTER_PATH" value=".gradle/5.2.1/executionHistory/executionHistory.lock" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_04_07_2022,_22_51_[Changes]/executionHistory.lock" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/5.2.1/javaCompile/classAnalysis.bin" />
+    <option name="AFTER_PATH" value=".gradle/5.2.1/javaCompile/classAnalysis.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_04_07_2022,_22_51_[Changes]/classAnalysis.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/classes/java/main/App.class" />
+    <option name="AFTER_PATH" value="build/classes/java/main/App.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_04_07_2022,_22_51_[Changes]/App.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/5.2.1/executionHistory/executionHistory.bin" />
+    <option name="AFTER_PATH" value=".gradle/5.2.1/executionHistory/executionHistory.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_04_07_2022,_22_51_[Changes]/executionHistory.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/5.2.1/fileHashes/fileHashes.lock" />
+    <option name="AFTER_PATH" value=".gradle/5.2.1/fileHashes/fileHashes.lock" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_04_07_2022,_22_51_[Changes]/fileHashes.lock" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/5.2.1/fileHashes/fileHashes.bin" />
+    <option name="AFTER_PATH" value=".gradle/5.2.1/fileHashes/fileHashes.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_04_07_2022,_22_51_[Changes]/fileHashes.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/buildOutputCleanup/buildOutputCleanup.lock" />
+    <option name="AFTER_PATH" value=".gradle/buildOutputCleanup/buildOutputCleanup.lock" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_04_07_2022,_22_51_[Changes]/buildOutputCleanup.lock" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/5.2.1/fileContent/fileContent.lock" />
+    <option name="AFTER_PATH" value=".gradle/5.2.1/fileContent/fileContent.lock" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_04_07_2022,_22_51_[Changes]/fileContent.lock" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/5.2.1/javaCompile/taskHistory.bin" />
+    <option name="AFTER_PATH" value=".gradle/5.2.1/javaCompile/taskHistory.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_04_07_2022,_22_51_[Changes]/taskHistory.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/buildOutputCleanup/outputFiles.bin" />
+    <option name="AFTER_PATH" value=".gradle/buildOutputCleanup/outputFiles.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_04_07_2022,_22_51_[Changes]/outputFiles.bin" />
+  </binary>
+</changelist>

@@ -1,0 +1,319 @@
+Index: src/main/java/App.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import com.google.gson.Gson;\nimport daos.ArticlesSql2oDao;\nimport models.Article;\n\n\nimport java.util.List;\n\nimport static spark.Spark.*;\nimport static spark.Spark.delete;\nimport static spark.Spark.get;\n\npublic class App {\n    public static void main(String[] args) {\n\n\n\n        Gson gson = new Gson();\n        ArticlesSql2oDao ArticlesSql2oDao = new ArticlesSql2oDao();\n\n        post(\"/post-article\", (request, response) -> {\n            Article article = gson.fromJson(request.body(), Article.class);\n            ArticlesSql2oDao.addArticle(article);\n            return gson.toJson(article);\n        });\n\n        delete(\"/delete-article\", (req, res) -> {\n            ArticlesSql2oDao.removeArticle(4);\n            responseObject OBJ = new responseObject(\"Success deleted\", \"Ok\", 200);\n            return gson.toJson(OBJ);\n        });\n\n        get(\"/search-articles/:search\", (req, res) -> {\n            String query = req.params(\"search\");\n            List<Article> list = ArticlesSql2oDao.searchArticle(query);\n            System.out.println(list.size());\n            return gson.toJson(list);\n        });\n\n        get(\"/get-one-article/:search\", (req, res) -> {\n            int query = Integer.parseInt(req.params(\"search\"));\n           Article article = ArticlesSql2oDao.getSpecificArticle(query);\n\n            return gson.toJson(article);\n        });\n\n        patch(\"/update-article\",(req, res) ->{\n          //  Article article1 = gson.fromJson(req.body(),Article.class);\n            Article article = new Article(\"tyuifghj\",236666,\"ertyuiopdfghjkl;0fguio\",\"tyuifghjk\");\n            article.setId(6);\n            ArticlesSql2oDao.editArticle(article);\n\n            return gson.toJson(article);\n        });\n\n\n    }\n\n    private static class responseObject {\n        public responseObject(String success, String ok, int i) {\n        }\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/App.java b/src/main/java/App.java
+--- a/src/main/java/App.java	(revision 377a737249de1840115ade2643eb1893bd938cfa)
++++ b/src/main/java/App.java	(date 1656853303555)
+@@ -1,6 +1,8 @@
+ import com.google.gson.Gson;
+ import daos.ArticlesSql2oDao;
++import daos.ChatSql2oDao;
+ import models.Article;
++import models.Chat;
+ 
+ 
+ import java.util.List;
+@@ -8,15 +10,18 @@
+ import static spark.Spark.*;
+ import static spark.Spark.delete;
+ import static spark.Spark.get;
++import static spark.route.HttpMethod.get;
++import static spark.route.HttpMethod.post;
+ 
+ public class App {
+     public static void main(String[] args) {
+-
+-
+-
+         Gson gson = new Gson();
++///////////////////////////////////////////////ARTICLE//////////////////////////////////////////////////////////////
+         ArticlesSql2oDao ArticlesSql2oDao = new ArticlesSql2oDao();
+-
++        get("/get-allArticles",(req, res) ->{
++            List<Article> list = ArticlesSql2oDao.getAllArticles();
++            return gson.toJson(list);
++        });
+         post("/post-article", (request, response) -> {
+             Article article = gson.fromJson(request.body(), Article.class);
+             ArticlesSql2oDao.addArticle(article);
+@@ -51,12 +56,58 @@
+ 
+             return gson.toJson(article);
+         });
++/////////////////////////////////////////CHATS/////////////////////////////////////////////////
++        ChatSql2oDao chatDao = new ChatSql2oDao();
++        get("/get-allChats",(req, res) ->{
++            List<Chat> list = chatDao.getAllChats();
++           return gson.toJson(list);
++        });
++        post("/chat",(req, res) ->{
++            Chat chat = new Chat(15,14,"wertyrtyui");
++            chatDao.addArticle(chat);
++            return gson.toJson(chat);
++        });
++
++        patch("/edit-chat",(req, res) ->{
++            Chat chat = new Chat(1,3,"any message");
++            chat.setID(1);
++            chatDao.editArticle(chat);
++            return gson.toJson(chat);
++        });
++
++
++        delete("/delete-chat", (req, res) -> {
++            chatDao.removeArticle(9);
++            responseObject OBJ = new responseObject("Success deleted", "Ok", 200);
++            return gson.toJson(OBJ);
++        });
++        get("/search-chat/:search", (req, res) -> {
++            String query = req.params("search");
++            List<Chat> list = chatDao.searchChats(query);
++            System.out.println(list.size());
++            return gson.toJson(list);
++        });
++        get("/chat-thread",(req,res)->{
++            List<Chat> list = chatDao.getSpecificChatThread(1,3);
++            return gson.toJson(list);
++        });
++
++
++
++
+ 
+ 
+     }
+ 
+     private static class responseObject {
+-        public responseObject(String success, String ok, int i) {
++        String message ;
++        String status;
++        int statuscode;
++
++        public responseObject(String message, String status, int statuscode) {
++            this.message = message;
++            this.status = status;
++            this.statuscode = statuscode;
+         }
+     }
+ }
+Index: src/main/java/daos/ArticleDao.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package daos;\n\nimport models.Article;\n\nimport java.util.List;\n\npublic interface ArticleDao {\n    void addArticle(Article article);\n    void removeArticle(int id);\n\n\n    Article getSpecificArticle(int id);\n\n    List<Article> searchArticle(String search);\n    void editArticle(Article article);\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/daos/ArticleDao.java b/src/main/java/daos/ArticleDao.java
+--- a/src/main/java/daos/ArticleDao.java	(revision 377a737249de1840115ade2643eb1893bd938cfa)
++++ b/src/main/java/daos/ArticleDao.java	(date 1656789236480)
+@@ -4,31 +4,13 @@
+ 
+ import java.util.List;
+ 
+-public interface ArticleDao {
++public interface ArticleDao
++{
+     void addArticle(Article article);
+     void removeArticle(int id);
+-
+-
+     Article getSpecificArticle(int id);
+-
+     List<Article> searchArticle(String search);
++    List<Article> getAllArticles();
+     void editArticle(Article article);
+ 
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+ }
+Index: src/main/resources/sql/create.sql
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>CREATE DATABASE mum_app;\n\\c mum_app;\nCreate table articles(\nID  SERIAL PRIMARY KEY,\nHeading VARCHAR,\nArticleContent VARCHAR,\nAuthor VARCHAR,\nAuthorId int\n);
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/sql/create.sql b/src/main/resources/sql/create.sql
+--- a/src/main/resources/sql/create.sql	(revision 377a737249de1840115ade2643eb1893bd938cfa)
++++ b/src/main/resources/sql/create.sql	(date 1656765671600)
+@@ -6,4 +6,10 @@
+ ArticleContent VARCHAR,
+ Author VARCHAR,
+ AuthorId int
++);
++Create table chats(
++ID  SERIAL PRIMARY KEY,
++message VARCHAR,
++ReceiverID int,
++senderID int
+ );
+\ No newline at end of file
+Index: src/main/java/daos/ArticlesSql2oDao.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package daos;\n\nimport models.Article;\nimport org.sql2o.Connection;\n\nimport java.util.List;\nimport java.util.stream.Collectors;\n\npublic class ArticlesSql2oDao implements ArticleDao {\n    @Override\n    public void addArticle(Article article) {\n        String sqlStatement = \"Insert into articles (heading, articlecontent, author, authorid) values( :heading, :articlecontent, :author,:authorid);\";\n        try (Connection conn = DatabaseConnection.sql2o.open()) {\n            int id = (int) conn.createQuery(sqlStatement, true)\n                    .addParameter(\"heading\", article.getHeading())\n                    .addParameter(\"articlecontent\", article.getArticleContent())\n                    .addParameter(\"author\", article.getAuthor())\n                    .addParameter(\"authorid\", article.getAuthorId())\n                    .executeUpdate()\n                    .getKey();\n            article.setId(id);\n\n\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n\n    }\n\n    @Override\n    public void removeArticle(int id)\n    {\n        String sqlStatement = \"Delete from articles where id =:id\";\n        try(Connection con = DatabaseConnection.sql2o.open())\n        {\n            con.createQuery(sqlStatement)\n                    .addParameter(\"id\",id)\n                    .executeUpdate();\n\n        }\n        catch (Exception e)\n        {\n        }\n\n    }\n\n    @Override\n    public Article getSpecificArticle(int id) {\n\n        String sqlStatement = \"Select * from articles where id=:id\";\n        try(Connection con = DatabaseConnection.sql2o.open())\n        {\n          return  con.createQuery(sqlStatement)\n                    .addParameter(\"id\",id)\n                    .executeAndFetchFirst(Article.class);\n\n        }\n        catch (Exception e)\n        {\n        }\n        return null;\n    }\n\n    @Override\n    public List<Article> searchArticle(String search) {\n        String sqlStatement = \"Select * from articles\";\n        try(Connection con = DatabaseConnection.sql2o.open())\n        {\n          return  con.createQuery(sqlStatement)\n                    .executeAndFetch(Article.class)\n                  .stream()\n                  .filter(article -> article.getHeading().toLowerCase()\n                          .contains(search.toLowerCase())||article.getAuthor().toLowerCase()\n                          .contains(search.toLowerCase())).collect(Collectors.toList());\n\n        }\n        catch (Exception e)\n        {\n        }\n        return null;\n    }\n\n    @Override\n    public void editArticle(Article article) {\n\n        String sqlStatement = \"Update articles set (heading,articlecontent,author,authorid) = ( :heading, :articlecontent, :author,:authorid) where id=:id;\";\n        try (Connection conn = DatabaseConnection.sql2o.open()) {\n            int id = (int) conn.createQuery(sqlStatement, true)\n                    .addParameter(\"heading\", article.getHeading())\n                    .addParameter(\"articlecontent\", article.getArticleContent())\n                    .addParameter(\"author\", article.getAuthor())\n                    .addParameter(\"authorid\", article.getAuthorId())\n                    .addParameter(\"id\",article.getId())\n                    .executeUpdate()\n                    .getKey();\n            article.setId(id);\n\n\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/daos/ArticlesSql2oDao.java b/src/main/java/daos/ArticlesSql2oDao.java
+--- a/src/main/java/daos/ArticlesSql2oDao.java	(revision 377a737249de1840115ade2643eb1893bd938cfa)
++++ b/src/main/java/daos/ArticlesSql2oDao.java	(date 1656789536276)
+@@ -40,6 +40,7 @@
+         }
+         catch (Exception e)
+         {
++            e.printStackTrace();
+         }
+ 
+     }
+@@ -57,6 +58,7 @@
+         }
+         catch (Exception e)
+         {
++            e.printStackTrace();
+         }
+         return null;
+     }
+@@ -76,6 +78,22 @@
+         }
+         catch (Exception e)
+         {
++e.printStackTrace();
++        }
++        return null;
++    }
++
++    @Override
++    public List<Article> getAllArticles() {
++        String sqlStatement = "Select * from articles";
++        try(Connection con = DatabaseConnection.sql2o.open())
++        {
++            return  con.createQuery(sqlStatement)
++                    .executeAndFetch(Article.class);
++        }
++        catch (Exception e)
++        {
++            e.printStackTrace();
+         }
+         return null;
+     }
+Index: build/resources/main/sql/create.sql
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>CREATE DATABASE mum_app;\n\\c mum_app;\nCreate table articles(\nID  SERIAL PRIMARY KEY,\nHeading VARCHAR,\nArticleContent VARCHAR,\nAuthor VARCHAR,\nAuthorId int\n);
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/build/resources/main/sql/create.sql b/build/resources/main/sql/create.sql
+--- a/build/resources/main/sql/create.sql	(revision 377a737249de1840115ade2643eb1893bd938cfa)
++++ b/build/resources/main/sql/create.sql	(date 1656765735088)
+@@ -6,4 +6,10 @@
+ ArticleContent VARCHAR,
+ Author VARCHAR,
+ AuthorId int
++);
++Create table chats(
++ID  SERIAL PRIMARY KEY,
++message VARCHAR,
++ReceiverID int,
++senderID int
+ );
+\ No newline at end of file
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"GradleSettings\">\n    <option name=\"linkedExternalProjectsSettings\">\n      <GradleProjectSettings>\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\n        <option name=\"modules\">\n          <set>\n            <option value=\"$PROJECT_DIR$\" />\n          </set>\n        </option>\n      </GradleProjectSettings>\n    </option>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/gradle.xml b/.idea/gradle.xml
+--- a/.idea/gradle.xml	(revision 377a737249de1840115ade2643eb1893bd938cfa)
++++ b/.idea/gradle.xml	(date 1656753914141)
+@@ -1,5 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
++  <component name="GradleMigrationSettings" migrationVersion="1" />
+   <component name="GradleSettings">
+     <option name="linkedExternalProjectsSettings">
+       <GradleProjectSettings>
+Index: src/main/java/models/Chat.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/models/Chat.java b/src/main/java/models/Chat.java
+new file mode 100644
+--- /dev/null	(date 1656754879485)
++++ b/src/main/java/models/Chat.java	(date 1656754879485)
+@@ -0,0 +1,52 @@
++package models;
++
++
++
++public class Chat {
++    private int SenderID;
++    private int ReceiverID;
++    private String Message;
++    private int ID;
++
++    public Chat() {
++    }
++
++
++
++    public Chat(int senderID, int receiverID, String message) {
++        SenderID = senderID;
++        ReceiverID = receiverID;
++        Message = message;
++    }
++
++    public int getReceiverID() {
++        return ReceiverID;
++    }
++
++    public void setReceiverID(int receiverID) {
++        ReceiverID = receiverID;
++    }
++
++    public String getMessage() {
++        return Message;
++    }
++
++    public void setMessage(String message) {
++        Message = message;
++    }
++
++    public int getSenderID() {
++        return SenderID;
++    }
++
++    public void setSenderID(int senderID) {
++        SenderID = senderID;
++    }
++    public int getID() {
++        return ID;
++    }
++
++    public void setID(int ID) {
++        this.ID = ID;
++    }
++}
